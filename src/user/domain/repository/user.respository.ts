@@ -1,17 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IResponse } from 'src/common/domain/interface/response';
 
 import { IUserModel } from 'src/common/domain/interface/user/model/user-model.interface';
 import { OrmUserRepository } from 'src/common/domain/repositories/orm/user/orm-user.repository';
 
 import { CreateUserDto } from 'src/user/domain/dto/create-user.dto';
-import {
-  IUseCaseUserService,
-  IUserRepository,
-} from 'src/user/domain/interfaces/user.interface';
+import { IOrmUserRepository } from 'src/common/domain/interface/user/repository.interface';
+import { IUserRepository } from '../interfaces/user.interface';
 
 @Injectable()
-export class UserUseCaseService implements IUseCaseUserService {
+export class UserRepository implements IOrmUserRepository {
   constructor(
     @Inject(OrmUserRepository)
     private readonly userRepository: IUserRepository,
@@ -24,11 +21,7 @@ export class UserUseCaseService implements IUseCaseUserService {
     return await this.userRepository.getUser(term);
   }
 
-  async createUser(user: CreateUserDto): Promise<IResponse> {
+  async createUser(user: CreateUserDto): Promise<void> {
     await this.userRepository.createUser(user);
-    return {
-      code: 200,
-      message: 'success',
-    };
   }
 }

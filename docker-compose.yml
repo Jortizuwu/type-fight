@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  postgres-db:
+    image: postgres
+    container_name: local-postgres-ft
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: postgres
+    networks:
+      - fighter-type
+    volumes:
+      - ./dbfiles/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./postgres-data:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4:8.1
+    container_name: pgadmin_ft
+    restart: always
+    ports:
+      - 5050:80
+    networks:
+      - fighter-type
+    environment:
+      PGADMIN_DEFAULT_EMAIL: test@test.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+
+  # app:
+  #   build:
+  #     context: .
+  #     target: ${NODE_ENV}
+  #     dockerfile: Dockerfile
+
+  #   volumes:
+  #     - .:/app/
+  #     - /app/node_modules
+
+  #   container_name: nest-ft
+  #   ports:
+  #     - ${PORT}:${PORT}
+  #   networks:
+  #     - fighter-type
+  #   depends_on:
+  #     - postgres-db
+  #   environment:
+  #     APP_VERSION: ${APP_VERSION}
+  #     NODE_ENV: ${NODE_ENV}
+  #     PORT: ${PORT}
+  #     DATABASE_URL: postgres://postgres:postgres@postgres-db:5432/fighter-type
+  #     JWT_SECRET: ${JWT_SECRET}
+networks:
+  fighter-type:
+    driver: bridge

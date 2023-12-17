@@ -1,13 +1,16 @@
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { postgresConnectionUri } from 'src/shared/config/env.conf';
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const DB_CONFIG = () =>
-  TypeOrmModule.forRoot({
-    type: 'postgres',
-    url: postgresConnectionUri,
-    entities: [__dirname + './../../**/*.entity{.ts,.js}'],
-
-    autoLoadEntities: true,
-    synchronize: true,
+  TypeOrmModule.forRootAsync({
+    imports: [ConfigModule],
+    useFactory: (configService: ConfigService) => ({
+      type: 'postgres',
+      url: configService.get('DATABASE_URL'),
+      entities: [__dirname + './../../**/*.entity{.ts,.js}'],
+      synchronize: true,
+      autoLoadEntities: true,
+    }),
+    inject: [ConfigService],
   });
