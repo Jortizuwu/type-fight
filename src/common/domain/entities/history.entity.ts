@@ -9,9 +9,9 @@ import {
 import { UserEnity } from './user.entity';
 
 @Entity({
-  name: 'matchs',
+  name: 'histories',
 })
-export class MatchEnity {
+export class HistoryEnity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
 
-export class CreateMatchDto {
+export class CreateHistoryDto {
   @IsNotEmpty()
   @IsString()
   @IsUUID()
