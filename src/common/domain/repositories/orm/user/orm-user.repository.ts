@@ -22,11 +22,11 @@ export class OrmUserRepository
     const termTypeUUID = this.isUUID.test(term);
 
     if (termTypeUUID) {
-      return await this.findOneBy({
+      return await this.findOneByOrFail({
         uid: term,
       });
     }
-    return await this.findOneBy({
+    return await this.findOneByOrFail({
       userName: term,
     });
   }
