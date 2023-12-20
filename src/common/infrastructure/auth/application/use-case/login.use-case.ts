@@ -50,6 +50,7 @@ export class LoginUsesCases implements IUseCaseLoginService {
       {
         userName,
         role,
+        uid: user.uid,
       },
       secret,
       expiresIn,

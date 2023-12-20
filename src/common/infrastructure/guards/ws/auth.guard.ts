@@ -16,13 +16,12 @@ export class WsJwtGuard implements CanActivate {
       return false;
     }
 
-    console.log(token);
     try {
       const decoded = this.jwtService.checkToken(token.replace('Bearer ', ''));
       wsContext.getData().user = decoded;
       return true;
     } catch (error) {
-      throw new WsException(error.message);
+      throw new WsException({ error: error.message, status: 401 });
     }
   }
 }

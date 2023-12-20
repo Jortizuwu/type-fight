@@ -5,7 +5,10 @@ import {
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
+import { MatchEnity } from './match.entity';
 
 @Entity({
   name: 'users',
@@ -45,4 +48,12 @@ export class UserEnity {
     type: 'varchar',
   })
   role: Role;
+
+  @ManyToMany(() => MatchEnity, (match) => match.id, {
+    cascade: true,
+  })
+  @JoinTable({
+    name: 'room',
+  })
+  matches: MatchEnity[];
 }

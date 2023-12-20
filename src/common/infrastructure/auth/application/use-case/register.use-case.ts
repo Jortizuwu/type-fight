@@ -41,7 +41,8 @@ export class RegisterUseCases implements IUseCaseRegisterService {
     const token = await this.jwtTokenService.createToken(
       {
         userName: singUpDto.userName,
-        role: 'user',
+        role: existUser.role,
+        uid: existUser.uid,
       },
       secret,
       expiresIn,

@@ -5,7 +5,6 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './common/infrastructure/auth/auth.module';
 import { DB_CONFIG } from './common/infrastructure/config/db-config';
-import { HistoryModule } from './history/history.module';
 import { Module } from '@nestjs/common';
 import { MatchModule } from './match/match.module';
 import { LoggerModule } from './common/infrastructure/logger/logger.module';
@@ -16,7 +15,6 @@ import { ExceptionsModule } from './common/infrastructure/exceptions/exceptions.
   imports: [
     DB_CONFIG(),
     AuthModule,
-    HistoryModule,
     UserModule,
     ConfigModule.forRoot({
       isGlobal: true,

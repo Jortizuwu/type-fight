@@ -6,12 +6,14 @@ import { AppModule } from './app.module';
 import { LoggingInterceptor } from './common/infrastructure/interceptors/logger.interceptor';
 import { LoggerService } from './common/infrastructure/logger/logger.service';
 import { ResponseInterceptor } from './common/infrastructure/interceptors/response.interceptor';
+import { AllExceptionFilter } from './common/infrastructure/exceptions/filter.exceptions';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalInterceptors(new LoggingInterceptor(new LoggerService()));
   app.useGlobalInterceptors(new ResponseInterceptor());
+  app.useGlobalFilters(new AllExceptionFilter(new LoggerService()));
 
   app.setGlobalPrefix('api');
   app.useGlobalPipes(

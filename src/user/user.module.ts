@@ -9,6 +9,7 @@ import { UserRepository } from './domain/repository/user.respository';
 @Module({
   imports: [TypeOrmModule.forFeature([UserEnity])],
   providers: [UserUseCaseService, OrmUserRepository, UserRepository],
+  exports: [UserRepository],
   controllers: [UserController],
 })
 export class UserModule {}
