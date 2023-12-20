@@ -78,18 +78,19 @@ export class MatchUsesCaseService implements IUseCaseMatchService {
     }
   }
 
-  async getPlayersInMatch(roomId: string): Promise<string[]> {
-    // // Busca los jugadores asociados a la sala
-    // const matches = await this.matchRepository.find({
-    //   where: { roomId, status: 'pending' },
-    // });
-    // const players = matches
-    //   .map((match) => match.player1Id)
-    //   .concat(matches.map((match) => match.player2Id));
+  async getPlayersInMatch(matchId: string): Promise<string[]> {
+    const match = await this.matchRepository.getMatch(matchId, {
+      where: { id: matchId, status: 'pending' },
+      relations: ['players'],
+    });
+    const players = match.players.map((val) => val.uid);
+    return players;
+  }
 
-    // return players;
-    console.log(roomId);
-    return [''];
+  async finishMatch(matchId: string, client: Socket): Promise<void> {
+    this.matchRepository.finishMatch(matchId);
+    client.leave(matchId);
+    client.to(matchId).emit('matchFinish', { matchId });
   }
 
   private async decodeTokenAndGetUser(client: Socket): Promise<IUserModel> {

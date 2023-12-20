@@ -8,4 +8,5 @@ export class IMatchModel {
   isActive: boolean;
   players: IUserModel[];
   status: string;
+  winner: IUserModel | null;
 }

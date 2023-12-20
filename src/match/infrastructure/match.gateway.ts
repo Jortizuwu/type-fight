@@ -45,19 +45,18 @@ export class MatchGateway implements OnGatewayInit {
     this.logger.log(MatchGateway.name, 'joinMatch');
   }
 
-  // // @UseGuards(WsJwtGuard)
-  // // @SubscribeMessage('finishMatch')
-  // // handelFinishMatch(client: Socket, payload: { matchId: string }): void {
-  // //   const { matchId } = payload;
-  // //   const players = this.matchService.getPlayersInRoom(matchId);
-  // //   this.server.to(client.id).emit('finishMatch', { players });
-  // // }
+  @UseGuards(WsJwtGuard)
+  @SubscribeMessage('finishMatch')
+  handelFinishMatch(client: Socket, payload: { matchId: string }): void {
+    const { matchId } = payload;
+    this.matchService.finishMatch(matchId, client);
+  }
 
-  // @UseGuards(WsJwtGuard)
-  // @SubscribeMessage('getPlayers')
-  // handleGetPlayers(client: Socket, payload: { matchId: string }): void {
-  //   const { matchId } = payload;
-  //   const players = this.matchService.getPlayersInMatch(matchId);
-  //   this.server.to(client.id).emit('playersInRoom', { players });
-  // }
+  @UseGuards(WsJwtGuard)
+  @SubscribeMessage('getPlayers')
+  handleGetPlayers(client: Socket, payload: { matchId: string }): void {
+    const { matchId } = payload;
+    const players = this.matchService.getPlayersInMatch(matchId);
+    this.server.to(client.id).emit('playersInRoom', { players });
+  }
 }

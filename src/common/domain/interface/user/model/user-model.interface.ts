@@ -12,6 +12,7 @@ export class IUserModel {
   role: Role;
   password: string;
   matches: MatchEnity[];
+  wonMatches: MatchEnity[];
 }
 
 // export class IUserModel extends IUserWithoutPassword {

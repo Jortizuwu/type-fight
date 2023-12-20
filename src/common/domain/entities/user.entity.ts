@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
   ManyToMany,
   JoinTable,
+  OneToMany,
 } from 'typeorm';
 import { MatchEnity } from './match.entity';
 
@@ -56,4 +57,7 @@ export class UserEnity {
     name: 'room',
   })
   matches: MatchEnity[];
+
+  @OneToMany(() => MatchEnity, (match) => match.winner)
+  wonMatches: MatchEnity[];
 }

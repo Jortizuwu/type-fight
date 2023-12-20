@@ -6,6 +6,7 @@ import {
   PrimaryColumn,
   ManyToMany,
   JoinTable,
+  ManyToOne,
 } from 'typeorm';
 import { UserEnity } from './user.entity';
 
@@ -43,4 +44,7 @@ export class MatchEnity {
     name: 'room',
   })
   players: UserEnity[];
+
+  @ManyToOne(() => UserEnity, (user) => user.wonMatches, { nullable: true })
+  winner: UserEnity | null;
 }
