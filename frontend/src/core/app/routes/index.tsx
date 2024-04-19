@@ -1,6 +1,5 @@
 import { lazy, Suspense } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import PrivateRoute from './components/route.private'
 
 const Layout = lazy(() => import('../layout'))
 const Home = lazy(() => import('../../pages/home'))
